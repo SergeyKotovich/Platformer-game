@@ -10,6 +10,7 @@ namespace Player
 
         private bool _isJumping;
         private float _horizontalMove;
+        private SoundsManager _soundsManager;
 
         private void Update()
         {
@@ -17,15 +18,21 @@ namespace Player
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 _isJumping = true;
+              //  _soundsManager.PlaySoundJump();
             }
         }
 
-        public void FixedUpdate()
+        private void FixedUpdate()
         {
             _characterController.Move(_horizontalMove * Time.fixedDeltaTime, false, _isJumping);
             _animatorController.ShowWalk(_horizontalMove != 0);
             
             _isJumping = false;
+        }
+
+        public void Initialize(SoundsManager soundsManager)
+        {
+            _soundsManager = soundsManager;
         }
     }
 }
