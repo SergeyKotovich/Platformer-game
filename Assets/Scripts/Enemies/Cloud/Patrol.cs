@@ -8,6 +8,7 @@ public class Patrol : MonoBehaviour
     [SerializeField] private SpriteRenderer _spriteRenderer;
 
     private Vector3 target;
+    private const float _minDistance = 0.1f;
 
     private void Start()
     {
@@ -18,7 +19,7 @@ public class Patrol : MonoBehaviour
     {
         transform.position = Vector3.MoveTowards(transform.position, target, speed * Time.deltaTime);
         
-        if (Vector3.Distance(transform.position, target) < 0.1f)
+        if (Vector3.Distance(transform.position, target) < _minDistance)
         {
             if (target == pointA.position)
             {

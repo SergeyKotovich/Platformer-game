@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class LightingController : MonoBehaviour
 {
-    [SerializeField] private SpriteRenderer _spriteRenderer;
     [SerializeField] private Transform _cloudTransform; 
     [SerializeField] private Vector2 _endYPosition ; 
     [SerializeField] private float _moveDuration = 0.2f; 
@@ -11,7 +10,7 @@ public class LightingController : MonoBehaviour
     private void Awake()
     {
         StartLightningCycle();
-        _spriteRenderer.enabled = true;
+        gameObject.SetActive(true); 
     }
 
     private void StartLightningCycle()
@@ -21,13 +20,13 @@ public class LightingController : MonoBehaviour
         transform.DOLocalMove(_endYPosition, _moveDuration)
             .OnComplete(() => 
             {
-                _spriteRenderer.enabled = false;
+                gameObject.SetActive(false);
                 
                 DOVirtual.DelayedCall(_delayBeforeReset, () =>
                 {
                     transform.position = _cloudTransform.position;
                     
-                    _spriteRenderer.enabled = true;
+                    gameObject.SetActive(true);
                     
                     StartLightningCycle();
                 });
