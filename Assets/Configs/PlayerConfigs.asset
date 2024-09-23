@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7834460117bb4bed8f2d16b0628f1679, type: 3}
+  m_Name: PlayerConfigs
+  m_EditorClassIdentifier: 
+  <Speed>k__BackingField: 30
+  <MassForSuperJump>k__BackingField: 0.7
+  <StandardMass>k__BackingField: 1
+  <DelayAfterSuperJump>k__BackingField: 300
+  <DelayAfterTeleport>k__BackingField: 1000

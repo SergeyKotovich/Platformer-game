@@ -1,5 +1,6 @@
 using Events;
 using MessagePipe;
+using Player;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
@@ -7,10 +8,12 @@ using VContainer.Unity;
 public class GameLifetimeScope : LifetimeScope
 {
     [SerializeField] private Player.Player _player;
+    [SerializeField] private PlayerConfigs _playerConfigs;
 
     protected override void Configure(IContainerBuilder builder)
     {
         builder.RegisterInstance(_player).AsSelf().AsImplementedInterfaces();
+        builder.RegisterInstance(_playerConfigs);
 
         RegisterMessagePipe(builder);
     }
@@ -22,5 +25,6 @@ public class GameLifetimeScope : LifetimeScope
         builder.RegisterBuildCallback(c => GlobalMessagePipe.SetProvider(c.AsServiceProvider()));
         
         builder.RegisterMessageBroker<PlayerSteppedOnSpring>(options);
+        builder.RegisterMessageBroker<PlayerTeleported>(options);
     }
 }

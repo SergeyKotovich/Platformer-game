@@ -1,9 +1,7 @@
 using Events;
 using JetBrains.Annotations;
 using MessagePipe;
-using Player;
 using UnityEngine;
-using VContainer;
 
 public class Spring : MonoBehaviour
 {
@@ -15,15 +13,15 @@ public class Spring : MonoBehaviour
     {
         _playerSteppedOnSpringPublisher = playerSteppedOnSpringPublisher;
     }
-
-    private void OnCollisionEnter2D(Collision2D col)
+    
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (col.gameObject.CompareTag(GlobalConstants.PLAYER))
+        if (collision.gameObject.CompareTag(GlobalConstants.PLAYER))
         {
             _animator.SetTrigger(_springActivated);
         }
     }
-    
+
     [UsedImplicitly]
     private void EnableSuperJump()
     {

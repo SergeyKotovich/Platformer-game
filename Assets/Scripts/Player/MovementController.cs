@@ -6,16 +6,25 @@ namespace Player
     public class MovementController : MonoBehaviour
     {
         [SerializeField] private CharacterController2D _characterController;
-        [SerializeField] private float _speed = 5f;
         [SerializeField] private AnimationController _animationController;
         [SerializeField] private Rigidbody2D _rigidbody2D;
 
+        private SoundsManager _soundsManager;
+
         private bool _isJumping;
         private float _horizontalMove;
-        private SoundsManager _soundsManager;
-        private const float _massForSuperJump = 0.7f;
-        private const float _standardMass = 1f;
-        private const int _delay = 500;
+        private float _speed;
+        private float _massForSuperJump;
+        private float _standardMass;
+        private int _delayAfterSuperJump;
+
+        public void Initialize(PlayerConfigs playerConfigs)
+        {
+            _speed = playerConfigs.Speed;
+            _massForSuperJump = playerConfigs.MassForSuperJump;
+            _standardMass = playerConfigs.StandardMass;
+            _delayAfterSuperJump = playerConfigs.DelayAfterSuperJump;
+        }
 
         private void Update()
         {
@@ -24,8 +33,15 @@ namespace Player
             {
                 _isJumping = true;
                 _animationController.ShowJump();
-              //  _soundsManager.PlaySoundJump();
             }
+        }
+
+        private void FixedUpdate()
+        {
+            _characterController.Move(_horizontalMove * Time.fixedDeltaTime, false, _isJumping);
+            _animationController.ShowWalk(_horizontalMove != 0);
+
+            _isJumping = false;
         }
 
         public void EnableSuperJump()
@@ -37,22 +53,9 @@ namespace Player
 
         private async UniTask DisableSuperJump()
         {
-            await UniTask.Delay(_delay);
+            await UniTask.Delay(_delayAfterSuperJump);
             _rigidbody2D.mass = _standardMass;
             _isJumping = false;
-        }
-
-        private void FixedUpdate()
-        {
-            _characterController.Move(_horizontalMove * Time.fixedDeltaTime, false, _isJumping);
-            _animationController.ShowWalk(_horizontalMove != 0);
-            
-            _isJumping = false;
-        }
-
-        public void Initialize(SoundsManager soundsManager)
-        {
-            _soundsManager = soundsManager;
         }
     }
 }
